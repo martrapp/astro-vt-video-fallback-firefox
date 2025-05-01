@@ -1,0 +1,39 @@
+---
+import { ClientRouter } from "astro:transitions";
+---
+
+<html lang="en" transition:animate="slide">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+    <ClientRouter />
+    <style is:global>
+      :root {
+        margin: 0;
+        height: 100vh;
+        box-sizing: border-box;
+        overflow: hidden;
+      }
+      video {
+        height: 300px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+<script>
+  document.addEventListener("astro:after-swap", () =>
+    document
+      .querySelectorAll("video")
+      .forEach(
+        (v) =>
+          v.closest("[data-astro-transition-persist]") || (v.src = v.src)
+      )
+  );
+</script>
+  </body>
+</html>
